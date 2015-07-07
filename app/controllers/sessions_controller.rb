@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
           session[:user_id] = auth_user.id
           # pass either auth_user or auth_user.id to the path helper
           # -> Rails will figure it out
-          redirect_to(user_path(auth_user), flash:{ login_ok: "Logged in successfully" })
+          redirect_to(user_path(auth_user), login_ok: "Logged in successfully" )
         else
           # bad password
           flash.now[:alert] = "Invalid password"

@@ -19,7 +19,7 @@ class UsersController < ApplicationController
       user.save
       # log the user in
       session[:user_id] = user.id
-      redirect_to(user_path(user), flash:{ registered: "Welcome, #{user.email}" })
+      redirect_to(user, flash:{ registered: "Welcome, #{user.email}" })
     else
       flash.now[:alert] = "There was a problem with your registration"
       render :new
