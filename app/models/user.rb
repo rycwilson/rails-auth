@@ -1,17 +1,17 @@
 class User < ActiveRecord::Base
 
+  BCrypt::Engine.cost = 12
+
   # NOTE: The current Rails convention for validations is below
   # The validates_<whatever>_of convention is deprecated
   validates :email, presence: true, uniqueness: true
   validates :password_digest, presence: true
   validates :password, confirmation: true
-  validates :password_confirmation, presence: true, if: :password_changed?
+  validates :password_confirmation, presence: true, if: "!password.nil?"
 
   # associations
   has_many :users_books
   has_many :books, through: :users_books
-
-  BCrypt::Engine.cost = 12
 
   def authenticate(unencrypted_password)
     secure_password = BCrypt::Password.new(self.password_digest)
