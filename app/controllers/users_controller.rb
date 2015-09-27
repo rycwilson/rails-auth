@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  before_action :require_login, only: :show
+
   def new
     @user = User.new
   end
@@ -14,14 +16,14 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.new(user_params)
-    if user.valid?
-      user.save
-      # log the user in
-      session[:user_id] = user.id
-      redirect_to(user, flash:{ registered: "Welcome, #{user.email}" })
+    @user = User.new user_params
+    if @user.valid?
+      @user.save
+      login(@user)
+      redirect_to @user, flash: { success: "Welcome, #{@user.email}" }
     else
-      flash.now[:alert] = "There was a problem with your registration"
+      # TODO: pass through user.errors.messages
+      flash.now[:danger] = "Please fix these errors: #{@user.errors.messages}"
       render :new
     end
   end

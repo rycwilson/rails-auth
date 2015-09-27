@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= yield(:title) %></title>
+  <title>Auth App</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -27,7 +27,9 @@
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="#">Edit Profile</a></li>
                   <li class="divider"></li>
-                  <li><a href="#">Logout</a></li>
+                  <li>
+                    <%= link_to 'Logout', logout_path %>
+                  </li>
                 </ul>
               </li>
           </ul>
@@ -38,15 +40,14 @@
   </nav>
 
   <!-- Flash messaging -->
-  <% flash.each do |key, value| %>
-    <% if key == "notice" %>
-      <%= content_tag :div, value, class: "text-center alert alert-warning" %>
-    <% elsif key == "alert" %>
-      <%= content_tag :div, value, class: "text-center alert alert-danger" %>
-    <% elsif key == "login_ok" %>
-      <%= content_tag :div, value, class: "text-center alert alert-success" %>
-    <% else %>
-      <%= content_tag :div, value, class: "text-center alert alert-info" %>
+  <% flash.each do |type, msg| %>
+    <!-- type: success, info, warning, danger -->
+    <% if msg.is_a?(String) %>
+      <div class="text-center alert alert-<%= type %>" role="alert">
+        <button type="button" class="close" data-dismiss="alert"
+                aria-hidden="true">&times;</button>
+        <%= content_tag :div, msg, :id => "flash_#{type}" %>
+      </div>
     <% end %>
   <% end %>
 

@@ -3,9 +3,10 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  def current_user
-    @current_user ||= session[:user_id] && User.find_by_id(session[:user_id])
-  end
-  helper_method :current_user
+  # While all helper methods are available in all views,
+  # they aren't available in controllers, so we must
+  # include the helper module here
+  # (or include it in the specific controller)
+  include SessionsHelper
 
 end
