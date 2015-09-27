@@ -1,0 +1,10 @@
+{
+  "name": "dsl-generated dependencies",
+  "dependencies": {
+    "jquery": "latest",
+    "jquery-ujs": "latest",
+    "rails-turbolinks": "latest",
+    "bootstrap-sass": "latest",
+    "bootstrap-validator": "latest"
+  }
+}

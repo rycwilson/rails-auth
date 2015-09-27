@@ -1,0 +1,6 @@
+asset 'jquery'
+asset 'jquery-ujs'
+asset 'rails-turbolinks'
+asset 'bootstrap-sass'
+asset 'bootstrap-validator'
+
