@@ -17,7 +17,8 @@ class SessionsController < ApplicationController
       # email and password entered, ok
       if User.find_by(email: params[:email])
         # found a user, ok
-        auth_user = User.confirm(params[:email], params[:password])
+        auth_user = User.confirm({ email: params[:email],
+                                   password: params[:password] })
         if auth_user
           # user authorized, ok
           login auth_user

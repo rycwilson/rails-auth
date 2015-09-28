@@ -33,9 +33,9 @@ class User < ActiveRecord::Base
     @password
   end
 
-  def self.confirm(email_param, password_param)
-    user = User.find_by({email: email_param})
-    user.authenticate(password_param)
+  def self.confirm(user_params)
+    user = User.find_by(email: user_params[:email])
+    user.authenticate(user_params[:password])
   end
 
 end
