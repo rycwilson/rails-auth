@@ -13,12 +13,11 @@ class SessionsController < ApplicationController
   # See app/views/layout/application.html.erb for Flash implementation
   #
   def create
-    if params[:email].present? && params[:password].present?
+    if user_params[:email].present? && user_params[:password].present?
       # email and password entered, ok
-      if User.find_by(email: params[:email])
+      if User.find_by(email: user_params[:email])
         # found a user, ok
-        auth_user = User.confirm({ email: params[:email],
-                                   password: params[:password] })
+        auth_user = User.confirm user_params
         if auth_user
           # user authorized, ok
           login auth_user
@@ -51,6 +50,12 @@ class SessionsController < ApplicationController
   def destroy
     logout
     redirect_to '/', flash: { info: "Goodbye"}
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:email, :password)
   end
 
 end
